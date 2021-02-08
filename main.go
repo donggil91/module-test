@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/dongil91/module-test/mysql"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -20,18 +21,20 @@ func main() {
 
 func run() error {
 	connString := "go_api:go_api@tcp(172.18.0.2:3306)/go_api"
-	_, err := setupDatabase(connString)
+	db, err := setupDatabase(connString)
 	if err != nil {
 		return err
 	}
 
+	userRepository := mysql.NewMysqlUserRepository(db)
 	router := gin.Default()
 	router.GET("/apis/users/me", func(c *gin.Context) {
 		authorization := c.Request.Header.Get("Authorization")
 		log.Print(authorization)
+		me, _ := userRepository.FindById(c, "test")
 		response := make(map[string]string)
 		response["message"] = "success"
-		c.JSON(http.StatusOK, response)
+		c.JSON(http.StatusOK, me)
 	})
 	router.Run()
 
