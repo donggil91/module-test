@@ -21,7 +21,7 @@ func main() {
 }
 
 func run() error {
-	connString := "go_api:go_api@tcp(172.18.0.2:3306)/go_api"
+	connString := "go_api:go_api@tcp(172.18.0.2:3306)/go_api?parseTime=true"
 	db, err := setupDatabase(connString)
 	if err != nil {
 		return err

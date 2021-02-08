@@ -21,7 +21,7 @@ func NewUserRouter(engine *gin.Engine, userService domain.UserService) {
 func (ur *UserRouter) FindAll(c *gin.Context) {
 	authorization := c.Request.Header.Get("Authorization")
 	log.Print(authorization)
-	me, _ := ur.userService.FindById(c, "test")
+	me, _ := ur.userService.FindById(c, 1)
 	response := make(map[string]string)
 	response["message"] = "success"
 	c.JSON(http.StatusOK, me)

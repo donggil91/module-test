@@ -16,7 +16,7 @@ func NewUserService(u domain.UserRepository) domain.UserService {
 	}
 }
 
-func (u *userService) FindById(ctx context.Context, id string) (*domain.User, error) {
+func (u *userService) FindById(ctx context.Context, id int64) (*domain.User, error) {
 	user, err := u.userRepository.FindById(ctx, id)
 	if err != nil {
 		panic(err)
