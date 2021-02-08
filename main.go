@@ -6,7 +6,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/dongil91/module-test/mysql"
+	"github.com/dongil91/module-test/repository"
 	"github.com/dongil91/module-test/router"
 	"github.com/dongil91/module-test/service"
 	"github.com/gin-gonic/gin"
@@ -34,7 +34,7 @@ func run() error {
 		}
 	}()
 
-	userRepository := mysql.NewMysqlUserRepository(db)
+	userRepository := repository.NewMysqlUserRepository(db)
 	userService := service.NewUserService(userRepository)
 	engine := gin.Default()
 	router.NewUserRouter(engine, userService)
