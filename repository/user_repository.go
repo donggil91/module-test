@@ -53,3 +53,15 @@ func (u *UserRepository) FindAll() ([]*domain.User, error) {
 
 	return users, nil
 }
+
+func (u *UserRepository) Create() error {
+	return nil
+}
+
+func (u *UserRepository) Update() error {
+	return nil
+}
+
+func (u *UserRepository) Delete() error {
+	return nil
+}

@@ -17,6 +17,9 @@ type User struct {
 type UserRepository interface {
 	FindById(ctx context.Context, id int64) (*User, error)
 	FindAll() ([]*User, error)
+	Create() error
+	Update() error
+	Delete() error
 }
 
 type UserService interface {

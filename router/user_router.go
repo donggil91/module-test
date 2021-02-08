@@ -17,6 +17,9 @@ func NewUserRouter(engine *gin.Engine, userService domain.UserService) {
 
 	engine.GET("/apis/users/me", userRouter.FindById)
 	engine.GET("/apis/users", userRouter.FindAll)
+	engine.POST("/apis/users", userRouter.Create)
+	engine.PUT("/apis/users", userRouter.Update)
+	engine.DELETE("apis/users", userRouter.Delete)
 }
 
 func (ur *UserRouter) FindById(c *gin.Context) {
@@ -29,4 +32,16 @@ func (ur *UserRouter) FindById(c *gin.Context) {
 func (ur *UserRouter) FindAll(c *gin.Context) {
 	users, _ := ur.userService.FindAll()
 	c.JSON(http.StatusOK, users)
+}
+
+func (ur *UserRouter) Create(c *gin.Context) {
+
+}
+
+func (ur *UserRouter) Delete(c *gin.Context) {
+
+}
+
+func (ur *UserRouter) Update(c *gin.Context) {
+
 }
