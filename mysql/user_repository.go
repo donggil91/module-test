@@ -8,17 +8,17 @@ import (
 	"github.com/dongil91/module-test/domain"
 )
 
-type userRepository struct {
+type UserRepository struct {
 	DB *sql.DB
 }
 
 func NewMysqlUserRepository(db *sql.DB) domain.UserRepository {
-	return &userRepository{
+	return &UserRepository{
 		DB: db,
 	}
 }
 
-func (u *userRepository) FindById(ctx context.Context, id string) (*domain.User, error) {
+func (u *UserRepository) FindById(ctx context.Context, id string) (*domain.User, error) {
 	return &domain.User{
 		ID:             "1",
 		Name:           "Dong Gil",
@@ -28,6 +28,6 @@ func (u *userRepository) FindById(ctx context.Context, id string) (*domain.User,
 	}, nil
 }
 
-func (u *userRepository) FindAll() ([]*domain.User, error) {
+func (u *UserRepository) FindAll() ([]*domain.User, error) {
 	return nil, nil
 }

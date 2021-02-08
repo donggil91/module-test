@@ -4,10 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/dongil91/module-test/mysql"
+	"github.com/dongil91/module-test/router"
+	"github.com/dongil91/module-test/service"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -26,17 +27,18 @@ func run() error {
 		return err
 	}
 
+	defer func() {
+		err := db.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
 	userRepository := mysql.NewMysqlUserRepository(db)
-	router := gin.Default()
-	router.GET("/apis/users/me", func(c *gin.Context) {
-		authorization := c.Request.Header.Get("Authorization")
-		log.Print(authorization)
-		me, _ := userRepository.FindById(c, "test")
-		response := make(map[string]string)
-		response["message"] = "success"
-		c.JSON(http.StatusOK, me)
-	})
-	router.Run()
+	userService := service.NewUserService(userRepository)
+	engine := gin.Default()
+	router.NewUserRouter(engine, userService)
+	engine.Run()
 
 	return nil
 }

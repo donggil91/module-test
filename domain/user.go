@@ -17,3 +17,8 @@ type UserRepository interface {
 	FindById(ctx context.Context, id string) (*User, error)
 	FindAll() ([]*User, error)
 }
+
+type UserService interface {
+	FindById(ctx context.Context, id string) (*User, error)
+	FindAll() ([]*User, error)
+}
