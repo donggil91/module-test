@@ -25,5 +25,9 @@ func (u *userService) FindById(ctx context.Context, id int64) (*domain.User, err
 }
 
 func (u *userService) FindAll() ([]*domain.User, error) {
-	return nil, nil
+	users, err := u.userRepository.FindAll()
+	if err != nil {
+		panic(err)
+	}
+	return users, nil
 }

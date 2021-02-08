@@ -34,5 +34,22 @@ func (u *UserRepository) FindById(ctx context.Context, id int64) (*domain.User, 
 }
 
 func (u *UserRepository) FindAll() ([]*domain.User, error) {
-	return nil, nil
+	rows, err := u.DB.Query("SELECT id, name, email, last_modified_at, created_at FROM user")
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+	log.Println(rows)
+	var users []*domain.User
+	for rows.Next() {
+		var user domain.User
+		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.LastModifiedAt, &user.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		users = append(users, &user)
+	}
+
+	return users, nil
 }
