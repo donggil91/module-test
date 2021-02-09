@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"context"
 	"database/sql"
 	"time"
 )
@@ -14,15 +13,26 @@ type User struct {
 	CreatedAt      time.Time    `json:"created_at"`
 }
 
-type UserRepository interface {
-	FindById(ctx context.Context, id int64) (*User, error)
+type Reader interface {
+	FindById(id int64) (*User, error)
 	FindAll() ([]*User, error)
-	Create() error
-	Update() error
-	Delete() error
+}
+
+type Writer interface {
+	Create(name string, email string) error
+	Update(name string, email string, id int64) error
+	Delete(id int64) error
+}
+
+type UserRepository interface {
+	Reader
+	Writer
 }
 
 type UserService interface {
-	FindById(ctx context.Context, id int64) (*User, error)
+	FindById(id int64) (*User, error)
 	FindAll() ([]*User, error)
+	Create(name string, email string) error
+	Update(name string, email string, id int64) error
+	Delete(id int64) error
 }

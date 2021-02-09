@@ -1,8 +1,6 @@
 package service
 
 import (
-	"context"
-
 	"github.com/dongil91/module-test/domain"
 )
 
@@ -16,8 +14,8 @@ func NewUserService(u domain.UserRepository) domain.UserService {
 	}
 }
 
-func (u *userService) FindById(ctx context.Context, id int64) (*domain.User, error) {
-	user, err := u.userRepository.FindById(ctx, id)
+func (u *userService) FindById(id int64) (*domain.User, error) {
+	user, err := u.userRepository.FindById(id)
 	if err != nil {
 		panic(err)
 	}
@@ -30,4 +28,16 @@ func (u *userService) FindAll() ([]*domain.User, error) {
 		panic(err)
 	}
 	return users, nil
+}
+
+func (u *userService) Create(name string, email string) error {
+	return u.userRepository.Create(name, email)
+}
+
+func (u *userService) Update(name string, email string, id int64) error {
+	return u.userRepository.Update(name, email, id)
+}
+
+func (u *userService) Delete(id int64) error {
+	return u.userRepository.Delete(id)
 }
