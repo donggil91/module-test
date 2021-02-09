@@ -13,8 +13,8 @@ type UserRouter struct {
 }
 
 type CreateUserRequest struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Name  string `json:"name" binding:"required"`
+	Email string `json:"email" binding:"required"`
 }
 
 func NewUserRouter(engine *gin.Engine, userService domain.UserService) {
