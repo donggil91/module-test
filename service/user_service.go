@@ -34,10 +34,10 @@ func (u *userService) Create(name string, email string) error {
 	return u.userRepository.Create(name, email)
 }
 
-func (u *userService) Update(name string, email string, id int64) error {
-	return u.userRepository.Update(name, email, id)
+func (u *userService) Update(name string, id int64) error {
+	return u.userRepository.Update(name, id)
 }
 
-func (u *userService) Delete(id int64) error {
+func (u *userService) Delete(id int) error {
 	return u.userRepository.Delete(id)
 }

@@ -17,6 +17,15 @@ type CreateUserRequest struct {
 	Email string `json:"email" binding:"required"`
 }
 
+type DeleteUserRequest struct {
+	Identity int `json:"identity" binding:"required"`
+}
+
+type UpdateUserRequest struct {
+	Identity int    `json:"identity" binding:"required"`
+	Name     string `json:"name" binding:"required"`
+}
+
 func NewUserRouter(engine *gin.Engine, userService domain.UserService) {
 	userRouter := UserRouter{userService: userService}
 
@@ -52,7 +61,7 @@ func (ur *UserRouter) Create(c *gin.Context) {
 	err = ur.userService.Create(createUserRequest.Name, createUserRequest.Email)
 	if err != nil {
 		res["error"] = err.Error()
-		c.JSON(http.StatusBadRequest, err.Error())
+		c.JSON(http.StatusBadRequest, res)
 		return
 	}
 
@@ -61,9 +70,45 @@ func (ur *UserRouter) Create(c *gin.Context) {
 }
 
 func (ur *UserRouter) Delete(c *gin.Context) {
+	deleteUserRequest := &DeleteUserRequest{}
+	err := c.ShouldBind(deleteUserRequest)
+	res := make(map[string]string)
+	if err != nil {
+		res["error"] = err.Error()
+		c.JSON(http.StatusBadRequest, res)
+		return
+	}
 
+	log.Println(deleteUserRequest)
+	err = ur.userService.Delete(deleteUserRequest.Identity)
+	if err != nil {
+		res["error"] = err.Error()
+		c.JSON(http.StatusBadRequest, res)
+		return
+	}
+
+	res["message"] = "success for delete user"
+	c.JSON(http.StatusOK, res)
 }
 
 func (ur *UserRouter) Update(c *gin.Context) {
+	updateUserRequest := &UpdateUserRequest{}
+	err := c.ShouldBind(updateUserRequest)
+	res := make(map[string]string)
+	if err != nil {
+		res["error"] = err.Error()
+		c.JSON(http.StatusBadRequest, res)
+		return
+	}
 
+	log.Println(updateUserRequest)
+	err = ur.userService.Update(updateUserRequest.Name, int64(updateUserRequest.Identity))
+	if err != nil {
+		res["error"] = err.Error()
+		c.JSON(http.StatusBadRequest, res)
+		return
+	}
+
+	res["message"] = "success for update user"
+	c.JSON(http.StatusOK, res)
 }

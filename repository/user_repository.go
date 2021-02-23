@@ -68,13 +68,13 @@ func (u *UserRepository) Create(name string, email string) error {
 	return nil
 }
 
-func (u *UserRepository) Update(name string, email string, id int64) error {
+func (u *UserRepository) Update(name string, id int64) error {
 	tx, err := u.DB.Begin()
 	if err != nil {
 		return err
 	}
 
-	result, err := tx.Exec("UPDATE user SET name = ?, email = ? WHERE id = ?", name, email, id)
+	result, err := tx.Exec("UPDATE user SET name = ? WHERE id = ?", name, id)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -84,7 +84,7 @@ func (u *UserRepository) Update(name string, email string, id int64) error {
 	return nil
 }
 
-func (u *UserRepository) Delete(id int64) error {
+func (u *UserRepository) Delete(id int) error {
 	tx, err := u.DB.Begin()
 	if err != nil {
 		return nil

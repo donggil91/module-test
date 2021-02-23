@@ -20,8 +20,8 @@ type Reader interface {
 
 type Writer interface {
 	Create(name string, email string) error
-	Update(name string, email string, id int64) error
-	Delete(id int64) error
+	Update(name string, id int64) error
+	Delete(id int) error
 }
 
 type UserRepository interface {
@@ -33,6 +33,6 @@ type UserService interface {
 	FindById(id int64) (*User, error)
 	FindAll() ([]*User, error)
 	Create(name string, email string) error
-	Update(name string, email string, id int64) error
-	Delete(id int64) error
+	Update(name string, id int64) error
+	Delete(id int) error
 }
