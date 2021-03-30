@@ -7,20 +7,20 @@ import (
 	"github.com/dongil91/module-test/domain"
 )
 
-type UserRepository struct {
+type SellerRepository struct {
 	DB *sql.DB
 }
 
-func NewMysqlUserRepository(db *sql.DB) domain.UserRepository {
-	return &UserRepository{
+func NewMysqlSellerRepository(db *sql.DB) domain.SellerRepository {
+	return &SellerRepository{
 		DB: db,
 	}
 }
 
-func (u *UserRepository) FindById(id int64) (*domain.User, error) {
+func (u *SellerRepository) FindById(id int64) (*domain.Seller, error) {
 	row := u.DB.QueryRow("SELECT id, name, email, last_modified_at, created_at FROM user WHERE id = ?", id)
 	log.Println(row)
-	var user domain.User
+	var user domain.Seller
 	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.LastModifiedAt, &user.CreatedAt)
 	switch err {
 	case sql.ErrNoRows:
@@ -32,7 +32,7 @@ func (u *UserRepository) FindById(id int64) (*domain.User, error) {
 	}
 }
 
-func (u *UserRepository) FindAll() ([]*domain.User, error) {
+func (u *SellerRepository) FindAll() ([]*domain.Seller, error) {
 	rows, err := u.DB.Query("SELECT id, name, email, last_modified_at, created_at FROM user")
 	if err != nil {
 		return nil, err
@@ -40,9 +40,9 @@ func (u *UserRepository) FindAll() ([]*domain.User, error) {
 
 	defer rows.Close()
 	log.Println(rows)
-	var users []*domain.User
+	var users []*domain.Seller
 	for rows.Next() {
-		var user domain.User
+		var user domain.Seller
 		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.LastModifiedAt, &user.CreatedAt)
 		if err != nil {
 			return nil, err
@@ -53,7 +53,7 @@ func (u *UserRepository) FindAll() ([]*domain.User, error) {
 	return users, nil
 }
 
-func (u *UserRepository) Create(name string, email string) error {
+func (u *SellerRepository) Create(name string, email string) error {
 	tx, err := u.DB.Begin()
 	if err != nil {
 		return err
@@ -68,7 +68,7 @@ func (u *UserRepository) Create(name string, email string) error {
 	return nil
 }
 
-func (u *UserRepository) Update(name string, id int64) error {
+func (u *SellerRepository) Update(name string, id int64) error {
 	tx, err := u.DB.Begin()
 	if err != nil {
 		return err
@@ -84,7 +84,7 @@ func (u *UserRepository) Update(name string, id int64) error {
 	return nil
 }
 
-func (u *UserRepository) Delete(id int) error {
+func (u *SellerRepository) Delete(id int) error {
 	tx, err := u.DB.Begin()
 	if err != nil {
 		return nil

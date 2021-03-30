@@ -5,16 +5,16 @@ import (
 )
 
 type userService struct {
-	userRepository domain.UserRepository
+	userRepository domain.SellerRepository
 }
 
-func NewUserService(u domain.UserRepository) domain.UserService {
+func NewUserService(u domain.SellerRepository) domain.SellerService {
 	return &userService{
 		userRepository: u,
 	}
 }
 
-func (u *userService) FindById(id int64) (*domain.User, error) {
+func (u *userService) FindById(id int64) (*domain.Seller, error) {
 	user, err := u.userRepository.FindById(id)
 	if err != nil {
 		panic(err)
@@ -22,7 +22,7 @@ func (u *userService) FindById(id int64) (*domain.User, error) {
 	return user, nil
 }
 
-func (u *userService) FindAll() ([]*domain.User, error) {
+func (u *userService) FindAll() ([]*domain.Seller, error) {
 	users, err := u.userRepository.FindAll()
 	if err != nil {
 		panic(err)

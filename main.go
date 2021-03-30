@@ -34,10 +34,10 @@ func run() error {
 		}
 	}()
 
-	userRepository := repository.NewMysqlUserRepository(db)
+	userRepository := repository.NewMysqlSellerRepository(db)
 	userService := service.NewUserService(userRepository)
 	engine := gin.Default()
-	router.NewUserRouter(engine, userService)
+	router.NewSellerRouter(engine, userService)
 	engine.Run()
 
 	return nil

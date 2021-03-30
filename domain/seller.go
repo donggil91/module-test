@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type User struct {
+type Seller struct {
 	ID             string       `json:"id"`
 	Name           string       `json:"name"`
 	Email          string       `json:"email"`
@@ -14,8 +14,8 @@ type User struct {
 }
 
 type Reader interface {
-	FindById(id int64) (*User, error)
-	FindAll() ([]*User, error)
+	FindById(id int64) (*Seller, error)
+	FindAll() ([]*Seller, error)
 }
 
 type Writer interface {
@@ -24,14 +24,14 @@ type Writer interface {
 	Delete(id int) error
 }
 
-type UserRepository interface {
+type SellerRepository interface {
 	Reader
 	Writer
 }
 
-type UserService interface {
-	FindById(id int64) (*User, error)
-	FindAll() ([]*User, error)
+type SellerService interface {
+	FindById(id int64) (*Seller, error)
+	FindAll() ([]*Seller, error)
 	Create(name string, email string) error
 	Update(name string, id int64) error
 	Delete(id int) error
