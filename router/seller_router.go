@@ -29,11 +29,11 @@ type UpdateSellerRequest struct {
 func NewSellerRouter(engine *gin.Engine, userService domain.SellerService) {
 	sellerRouter := SellerRouter{sellerService: userService}
 
-	engine.GET("/apis/users/me", sellerRouter.FindById)
-	engine.GET("/apis/users", sellerRouter.FindAll)
-	engine.POST("/apis/users", sellerRouter.Create)
-	engine.PUT("/apis/users", sellerRouter.Update)
-	engine.DELETE("apis/users", sellerRouter.Delete)
+	engine.GET("/apis/sellers/me", sellerRouter.FindById)
+	engine.GET("/apis/sellers", sellerRouter.FindAll)
+	engine.POST("/apis/sellers", sellerRouter.Create)
+	engine.PUT("/apis/sellers", sellerRouter.Update)
+	engine.DELETE("apis/sellers", sellerRouter.Delete)
 }
 
 func (ur *SellerRouter) FindById(c *gin.Context) {
